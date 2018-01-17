@@ -1,8 +1,5 @@
-# mesowest
+# mesowest: Simple R functions for working with the Mesowest / SynopticLabs climate data API
 
-## Simple R functions for working with the Mesowest / SynopticLabs climate data API
-
----
 
 ## Installation
 
@@ -11,12 +8,7 @@ library(devtools)
 install_github('fickse', 'mesowest')
 ```
 
----
-
-## Usage
-
-
-### Authentication
+## Authentication
 
 After you have obtained an (API key)[https://synopticlabs.org/api/guides/?getstarted], request a token...
 
@@ -31,7 +23,7 @@ requestToken()
 ``` 
 The token is saved to a text file in your root directory (`~/`)
 
-### Getting data
+## Getting data
 
 Services are accessed through the function `mesowest::mw`
 Parameters can be input as named arguments 
@@ -40,7 +32,7 @@ Parameters can be input as named arguments
 mw(service = 'metadata', complete=1, state='UT', county='Garfield')
 
 ```  
-If this results in awkward nested dataframes, include `jsonsimplify = FALSE` as an argument.
+If this results in awkward nested dataframes, include `jsonsimplify = FALSE` as an argument.  
 
 
 A quick reference for parameters can be accessed with `getparams()`
