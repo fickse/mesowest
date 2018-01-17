@@ -10,7 +10,7 @@ install_github('fickse', 'mesowest')
 
 ## Authentication
 
-After you have obtained an (API key)[https://synopticlabs.org/api/guides/?getstarted], request a token...
+After you have obtained an [API key](https://synopticlabs.org/api/guides/?getstarted), request a token...
 
 ```r
 library(mesowest)
