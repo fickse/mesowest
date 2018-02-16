@@ -5,7 +5,7 @@
 
 ```
 library(devtools)
-install_github('fickse', 'mesowest')
+install_github('fickse/mesowest')
 ```
 
 ## Authentication
