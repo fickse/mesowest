@@ -1,6 +1,5 @@
 # Mesowest api functions
 
-library(jsonlite)
 
 #todo: generate a token based on cached api key
 #token <- "bcdf362f83a74218a89c32733dfcac32"
@@ -14,7 +13,7 @@ baseurl <- function() "http://api.mesowest.net/v2/"
 #' @example mwvariables()
 mwvariables <- function(){
   url = paste0(baseurl(), 'variables?&token=', mwtoken(), '&output=json')
-  fromJSON(url, simplifyVector = F)
+  jsonlite::fromJSON(url, simplifyVector = F)
 }
 
 
@@ -83,7 +82,7 @@ mw <- function(service, jsonsimplify=TRUE, ...){
 
     }
   }
-  return (fromJSON(url, simplifyVector = jsonsimplify))
+  return (jsonlite::fromJSON(url, simplifyVector = jsonsimplify))
 
 }
 

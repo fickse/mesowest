@@ -21,7 +21,7 @@ requestToken <- function(apikey='find'){
 
   u <- paste0(baseurl(), "auth?&apikey=", key)
 
-  tok <- fromJSON(u)$TOKEN
+  tok <- jsonlite::fromJSON(u)$TOKEN
   cat(tok, file = '~/.mesowesttoken')
   message( 'token cached to ~/.mesowesttoken')
 }
