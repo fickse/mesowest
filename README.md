@@ -42,7 +42,7 @@ A quick reference for parameters can be accessed with `getparams()`
 getparams()
 
 # parameters for a specific service
-getparams('network')
+getparams('networks')
 ```
 
 There is also a shortcut api call to list variables
