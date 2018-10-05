@@ -1,0 +1,91 @@
+service,parameter,type,description,param,example
+station,stid," string[,string[...]]", Only get data from these specific stations,&stid=," example: KLGB,mtmet"
+station,country," string[,string[...]]", Restrict output to stations within this country,&country=," example: us,ca,mx"
+station,state," string[,string[...]]", Only use stations within these states/provinces. Note that province or territory can be used interchangably with state,&state=, example: UT
+station,county," string[,string[...]]"," Only return stations in counties with this name. US only, recommended use in combination with state",&county=, example: King
+station,status, string, Restrict results only to stations which are currently reporting data. (either 'active' or 'inactive'),&status=,
+station,nwszone," string[,string[...]]", Use only stations within these NWS forecast zones,&nwszone=, example:
+station,nwsfirezone," string[,string[...]]", Restrict results to only stations within these NWS fire zones,&nwsfirezone=, example:
+station,cwa," string[,string[...]]", Only use stations within these specified National Weather Services county warning areas/forecast offices,&cwa=," example: slc,fgz"
+station,gacc," string[,string[...]]", Only get data from stations in this geographic area coordination center,&gacc=, example:
+station,subgacc," string[,string[...]]", Only use stations within this sub-GACC,&subgacc=, example:
+station,vars," string[,string[...]]"," only use stations that report (all OR one, depending on varoperator) of these variables",&vars=," example: air_temp,wind_speed"
+station,varoperator, string, Define how &vars is understood. OR (the default) means any station with any variable in the list is used. AND means a station must report every variable to be included. (either 'or' or 'and'),&varoperator=,
+station,network," integer[,integer[...]]", Only get data from stations within these networks. Numeric network IDs which can be comma-separated.,&network=," example: 2,4"
+station,radius," float, float, float or string, float"," Only return stations within a great-circle distance from a specified point. [latitude, longitude, miles] OR you can specify a MesoWest station ID to use as the center point.",&radius=," example: 41.5,-120.25,20 or KOUN, 15"
+station,limit, integer, Specify how many of the closest stations you want to receive from a radius limit. A limit=1 value will return only the closest station to the requested point.,&limit=, example: 10
+station,bbox," float, float, float, float"," Only return stations which fall within the specified lat/lon-based box: [lonmin,latmin,lonmax,latmax]",&bbox=," example: -120,40,-119,41"
+station,groupby, string,"either 'state' 'country' 'county' 'cwa' 'gacc' 'subgacc', 'nwszone' 'nwsfirezone'",&groupby=,
+station,callback, string," For cross-domain web requests, this will add a function call outside the returned JSON object. This allows a JavaScript function running on one page to get data from our API.",&callback=,
+metadata,complete, boolean," If you pass a value to complete, we will give you more metadata about the station, including a summary of the period of record for the station, and other variables.",&complete=,
+metadata,sensorvars, boolean," If you include this argument with any values, we will give you a detailed list of all the variables available from each returned station. The &vars= argument from station selection will also reduce the variables output.",&sensorvars=,
+metadata,obrange, string, Filter stations to only those which were active on the date provided,&obrange=," example: 20150101,20150501"
+metadata,timeformat, string, Set the way time is output from any timestamps in the API. Defaults to ISO 8601 and uses a subset of the C time format library learn more,&timeformat=, example: %Y%m%d
+metadata,obtimezone, string,,&obtimezone=,
+metadata,output, string,,&output=,
+climatology,startclim, string, The first date of the year you want to get a climatology for. Format is MMDDhhmm.,&startclim=, example: 06011100
+climatology,endclim, string, The last date of the year you want to get a climatology for. Format is MMDDhhmm.,&endclim=, example: 10011100
+climatology,timeformat, string, Set the way time is output from any timestamps in the API. Defaults to ISO 8601 and uses a subset of the C time format library learn more,&timeformat=, example: %Y%m%d
+climatology,obtimezone, string,,&obtimezone=,
+climatology,showemptystations, boolean," By default, we only return stations which have the data you asked for. Set this argument, however, and we'll give you stations even if they have no data.",&showemptystations=,
+climatology,units," string[,string[...]]", We can give you either metric or english units. Or you can fine tune by variable. See the docs for more details.,&units=," example: temp|f,speed|kph"
+climatology,output, string,,&output=,
+precipitation,start, integer, YYYYMMDDHHMM UTC timestamp of the beginning of the precipitation integration period. Must be combined with end.,&start=, example: 201505201201
+precipitation,end, integer, YYYYMMDDHHMM UTC timestamp of the end of the precipitation integration period. Must be combined with start.,&end=, example: 201509201201
+precipitation,pmode,string,"&pmode=totals, Returns totals for the start and end dates.
+&pmode=intervals, Returns accumulated precip for intervals provided in the additional argument &interval. Valid keywords are hour, day, month, year, or integer in hours. Default value is day if &interval is not provided. Requires &start and &end. All intervals in the date range are returned and marked with an interval value in the response. Intervals move from end to start. Partial intervals at the end are still returned.
+&pmode=last, Returns accumulated precip intervals based on &end date. Requires argument &accum_hours. Default (omitted) is 1. Accepts a comma separated list of hours, starting from &end and moving back through time. Each interval always ends on the &end date. If a &start value is given, it is ignored. If &end is not given, a default of ""now"" is used.",&pmode=,example: intervals
+precipitation,interval,string,"Interval for &pmode = intervals; Valid keywords are hour, day, month, year, or integer in hours",&interval=,example:day
+precipitation,timeformat, string, Set the way time is output from any timestamps in the API. Defaults to ISO 8601 and uses a subset of the C time format library learn more,&timeformat=, example: %Y%m%d
+precipitation,obtimezone, string,Optional: A value of either UTC or local. If omitted the default is UTC. Set the timezone used on the observation output (input times are always UTC) |&obtimezone=local,&obtimezone=local,
+precipitation,units," string[,string[...]]", We can give you either metric or english units. Or you can fine tune by variable. See the docs for more details.,&units=," example: temp|f,speed|kph"
+precipitation,output, string,"Optional: Defaults to 'JSON'. 'XML' format and geoJSON are also output options with the same restrictions as JSON
+",&output=,"Example: &output=xml, &output=geojson"
+statistics,start, integer, YYYYMMDDHHMM UTC timestamp of the point to start computing statistics. Must be combined with end and not startclim/endclim.,&start=, example: 201505201201
+statistics,end, integer, YYYYMMDDHHMM UTC timestamp of the point to stop computing statistics. Must be combined with start and not startclim/endclim.,&end=, example: 201509201201
+statistics,startclim, string," Or, you can compute statistics over a climatology-type period (all years between these dates) startclim sets the first date of the year you want to get a climatology for. Format is MMDDhhmm.",&startclim=, example: 06011100
+statistics,endclim, string, When combined with startclim you can define the last date of the year you want to get a climatology for. Format is MMDDhhmm.,&endclim=, example: 10011100
+statistics,type, string, What kind of statistic would you like to receive.,&type=, example: avg
+statistics,timeformat, string, Set the way time is output from any timestamps in the API. Defaults to ISO 8601 and uses a subset of the C time format library learn more,&timeformat=, example: %Y%m%d
+statistics,obtimezone, string,,&obtimezone=,
+statistics,showemptystations, boolean," By default, we only return stations which have the data you asked for. Set this argument, however, and we'll give you stations even if they have no data.",&showemptystations=, 
+statistics,units," string[,string[...]]", We can give you either metric or english units. Or you can fine tune by variable. See the docs for more details.,&units=," example: temp|f,speed|kph"
+statistics,output, string,,&output=,
+nearesttime,attime, integer, Timestamp that you want to get the nearest observation to,&attime=, example: 201505160005
+nearesttime,within, integer, How long ago is the oldest observation you want to receive?,&within=, example: 60
+nearesttime,timeformat, string, Set the way time is output from any timestamps in the API. Defaults to ISO 8601 and uses a subset of the C time format library learn more,&timeformat=, example: %Y%m%d
+nearesttime,obtimezone, string,,&obtimezone=,
+nearesttime,units," string[,string[...]]", We can give you either metric or english units. Or you can fine tune by variable. See the docs for more details.,&units=," example: temp|f,speed|kph"
+nearesttime,output, string,,&output=,
+latency,start, integer, YYYYMMDDHHMM UTC timestamp of the beginning of the evaluation period. Must be combined with end.,&start=, example: 201505201201
+latency,end, integer, YYYYMMDDHHMM UTC timestamp of the end of the evaluation period. Must be combined with start.,&end=, example: 201509201201
+latency,stats, string, What kind of statistic would you like to receive.,&stats=, example: avg
+latency,units," string[,string[...]]", We can give you either metric or english units. Or you can fine tune by variable. See the docs for more details.,&units=," example: temp|f,speed|kph"
+latency,output, string,,&output=,
+latest,within, integer, How long ago is the oldest observation you want to receive?,&within=, example: 60
+latest,timeformat, string, Set the way time is output from any timestamps in the API. Defaults to ISO 8601 and uses a subset of the C time format library learn more,&timeformat=, example: %Y%m%d
+latest,obtimezone, string,,&obtimezone=,
+latest,units," string[,string[...]]", We can give you either metric or english units. Or you can fine tune by variable. See the docs for more details.,&units=," example: temp|f,speed|kph"
+latest,output, string,,&output=,
+networks,id," integer[,integer[...]]"," The numeric identifier of a network. These values are internal to MesoWest, and aren't used in other services",&id=," example: 1,5"
+networks,shortname," string[,string[...]]"," Use this argument to use the conventional network abbreviations (RAWS, SNOTEL, etc.) to restrict which networks you receive information about.",&shortname=," example: uunet,raws"
+networks,sortby, string, Use this to change the sorting from by ID number to by short name (with value alphabet),&sortby=, 
+networks,output, string,,&output=,
+networks,callback, string," For cross-domain web requests, this will add a function call outside the returned JSON object. This allows a JavaScript function running on one page to get data from our API.",&callback=, example: [some function name]
+networktypes,id," integer[,integer[...]]", Select just the network types you want to have described,&id=," example: 1,4"
+networktypes,output, string,,&output=,
+networktypes,callback, string," For cross-domain web requests, this will add a function call outside the returned JSON object. This allows a JavaScript function running on one page to get data from our API.",&callback=, example: [some function name]
+variables,output, string,,&output=,
+variables,callback, string," For cross-domain web requests, this will add a function call outside the returned JSON object. This allows a JavaScript function running on one page to get data from our API.",&callback=, example: [some function name]
+qctypes,id," integer[,integer[...]]", The numeric identifier of a specific QC test,&id=," example: 2,3"
+qctypes,shortname," string[,string[...]]", The string name of a test,&shortname=, example: superawesometest
+qctypes,output, string,,&output=,
+qctypes,callback, string," For cross-domain web requests, this will add a function call outside the returned JSON object. This allows a JavaScript function running on one page to get data from our API.",&callback=, example: [some function name]
+timeseries,start,integer ,YYYYMMDDHHMM UTC timestamp of the start of the timeseries. Ignore if you are using recent or latest ,&start=,example: 201505201201
+timeseries,end,integer ,YYYYMMDDHHMM UTC timestamp of the end of the timeseries. Ignore if you are using recent or latest ,&end=,example: 201509201201
+timeseries,timeformat,string ,Set the way time is output from any timestamps in the API. Defaults to ISO 8601 and uses a subset of the C time format library learn more.,&timeformat=,example: %Y%m%d
+timeseries,obtimezone,string ,either 'utc' or 'local',&obtimezone=,
+timeseries,showemptystations,boolean ,"By default, we only return stations which have the data you asked for. Set this argument, however, and we'll give you stations even if they have no data. ",&showemptystations=,
+timeseries,units,"string[,string[...]] ",We can give you either metric or english units. Or you can fine tune by variable. See the docs for more details. ,&units=,"example: temp|f,speed|kph"
+timeseries,recent,integer ,"Insetad of giving a start and end date/time, by using this parameter, the request will return a timeseries of values for the latest X minutes. Also responds to latest ",&recent=,example: 120
+timeseries,output,string ,"either 'json', 'xml', 'csv', 'geojson'",&output=,

@@ -2,7 +2,6 @@
 
 
 #todo: generate a token based on cached api key
-#token <- "bcdf362f83a74218a89c32733dfcac32"
 
 # base url
 baseurl <- function() "http://api.mesowest.net/v2/"
@@ -23,7 +22,9 @@ mwvariables <- function(){
 #' @example mwparams()
 getparams <- function(service = '') {
 
-  data(mwparams)
+  #data(mwparams)
+  sfile <- system.file("extdata", "mwparams.csv", package = "mesowest", mustWork = TRUE)
+  mwparams <- read.csv(sfile)
 
   if( !service == ''){
 
@@ -48,6 +49,7 @@ getparams <- function(service = '') {
 #'
 #' @param service character representing api service (e.g. 'metadata', 'timeseries')
 #' @param jsonsimplify Should json results be compacted to a data.frame if possible (default = TRUE)
+#' @param returnURL Only return query url (no results)?
 #' @param ... parameters in the mesowest api corresponding to service (https://synopticlabs.org/api/explore/)
 #' @return List of data from JSON response
 #' @details If a request with nested lists (eg. climate variables per station) is made, the station metadata will be an awkward dataframe. It is suggested in this case to use jsonsimplify=FALSE.
@@ -56,7 +58,7 @@ getparams <- function(service = '') {
 #' mw( 'metadata', complete=1, stid=c('COOPTEEA3','mtmet'))
 #' # Station metadata is a list
 #' mw( 'metadata', complete=1,sensorvars=1, stid=c('COOPTEEA3','mtmet'))
-mw <- function(service, jsonsimplify=TRUE, ...){
+mw <- function(service, jsonsimplify=TRUE, returnURL = FALSE, ...){
 
   args <- list(...)
   pp <- getparams()
@@ -70,6 +72,8 @@ mw <- function(service, jsonsimplify=TRUE, ...){
   }
 
   url <- paste0(baseurl(), service,'?&token=', mwtoken())
+
+  if(returnURL) return(url)
 
   for (argname in names(args)){
 
