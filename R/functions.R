@@ -24,7 +24,7 @@ getparams <- function(service = '') {
 
   #data(mwparams)
   sfile <- system.file("extdata", "mwparams.csv", package = "mesowest", mustWork = TRUE)
-  mwparams <- read.csv(sfile)
+  mwparams <- read.csv(sfile, stringsAsFactors = FALSE)
 
   if( !service == ''){
 
