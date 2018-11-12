@@ -73,8 +73,7 @@ mw <- function(service, jsonsimplify=TRUE, returnURL = FALSE, ...){
 
   url <- paste0(baseurl(), service,'?&token=', mwtoken())
 
-  if(returnURL) return(url)
-
+  
   for (argname in names(args)){
 
     if (argname %in% params){
@@ -86,6 +85,8 @@ mw <- function(service, jsonsimplify=TRUE, returnURL = FALSE, ...){
 
     }
   }
+  if(returnURL) return(url)
+
   return (jsonlite::fromJSON(url, simplifyVector = jsonsimplify))
 
 }
