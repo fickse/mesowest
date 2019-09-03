@@ -37,17 +37,27 @@ If this results in awkward nested dataframes, include `jsonsimplify = FALSE` as 
 
 Data can be queried using named parameters in the api
 
+### Timeseries
 ``r
-mw(service = 'timeseries', stid ='SFLU1', vars = c('air_temp', 'relative_humidity'), start = '201610250001', finish = '201610260001')
+# request hourly timeseries data
+d <- mw(service = 'timeseries', stid ='SFLU1', vars = c('air_temp', 'relative_humidity'), start = '201610250001', end = '201610260001', jsonsimplify= TRUE)
+
+# parsing the nested lists
+clim <- data.frame( lapply( d$STATION$OBSERVATIONS, unlist) )
+
 ```
 
+### Latest data
 ``r
-mw(service = 'latest', county = 'Garfield', state = 'UT')
+d <- mw(service = 'latest', county = 'Garfield', state = 'UT', vars = 'air_temp')
+
+cbind(d$STATION$STID,  d$STATION$OBSERVATIONS)
 
 ```
 
-Hourly Precip Totals
+### Precip
 ``r
+# requesting hourly totals
 mw(service = 'precipitation', stid='SFLU1', start =  '201610250010', end ='201611250001', pmode='intervals', interval = 'hour', jsonsimplify = TRUE, returnURL =FALSE)
 ```
 
@@ -70,6 +80,12 @@ mwvariables()
 ## Debugging
 
 The mw() function generates an API request which may be inspected by setting `returnURL = TRUE`.  
+
+E.g. this query
+`mw(service = 'latest', county = 'Garfield', state = 'UT', vars = 'air_temp', returnURL = TRUE)`
+returns this:
+`http://api.mesowest.net/v2/stations/latest?&token=XX_YOURTOKEN_XX&county=Garfield&state=UT&vars=air_temp`
+
 
 ---
 
