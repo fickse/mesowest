@@ -1,5 +1,6 @@
 # mesowest: Simple R functions for working with the Mesowest / SynopticLabs climate data API
 
+`mesowest` provides utilities for interfacing with the mesowest API using R
 
 ## Installation
 
@@ -34,6 +35,21 @@ mw(service = 'metadata', complete=1, state='UT', county='Garfield')
 ```  
 If this results in awkward nested dataframes, include `jsonsimplify = FALSE` as an argument.  
 
+Data can be queried using named parameters in the api
+
+``r
+mw(service = 'timeseries', stid ='SFLU1', vars = c('air_temp', 'relative_humidity'), start = '201610250001', finish = '201610260001')
+```
+
+``r
+mw(service = 'latest', county = 'Garfield', state = 'UT')
+
+```
+
+Hourly Precip Totals
+``r
+mw(service = 'precipitation', stid='SFLU1', start =  '201610250010', end ='201611250001', pmode='intervals', interval = 'hour', jsonsimplify = TRUE, returnURL =FALSE)
+```
 
 A quick reference for parameters can be accessed with `getparams()`
 
@@ -50,6 +66,10 @@ There is also a shortcut api call to list variables
 ```r
 mwvariables()
 ```
+
+## Debugging
+
+The mw() function generates an API request which may be inspected by setting `returnURL = TRUE`.  
 
 ---
 
